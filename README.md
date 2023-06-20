@@ -6,7 +6,7 @@ This is a backend application built with TypeScript and Node.js, designed to pro
 
 The Motel App is a comprehensive solution for managing reservations, rooms, and other essential aspects of running a successful motel business. Features include reservation management, room management, user authentication, booking workflow, and reporting and analytics. Take your motel business to new heights with the Motel App.
 
-### Live on : [Motel Docs]()
+### Live on : [Motel Docs](https://motel-pi.vercel.app/docs/)
 
 ## Getting Started
 
