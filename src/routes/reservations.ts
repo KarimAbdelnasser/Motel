@@ -1,11 +1,13 @@
 import { Router } from "express";
 import * as reservationControllers from "../controllers/reservations.controller";
-import { validateReservation } from "../middleware/validateReservation";
 import auth from "../middleware/auth";
+import auditMiddleware from "../middleware/audit";
 
 const router = Router();
 
-router.route("/new").post(auth, reservationControllers.createReservation);
+router
+    .route("/new")
+    .post(auth, auditMiddleware, reservationControllers.createReservation);
 
 /**
  * @openapi
@@ -118,7 +120,9 @@ router.route("/new").post(auth, reservationControllers.createReservation);
  *                   example: Internal server error
  */
 
-router.route("/getAll").get(auth, reservationControllers.getReservations);
+router
+    .route("/getAll")
+    .get(auth, auditMiddleware, reservationControllers.getReservations);
 
 /**
  * @openapi
@@ -199,7 +203,7 @@ router.route("/getAll").get(auth, reservationControllers.getReservations);
 
 router
     .route("/getById/:id")
-    .get(auth, reservationControllers.getReservationById);
+    .get(auth, auditMiddleware, reservationControllers.getReservationById);
 
 /**
  * @openapi
@@ -284,7 +288,7 @@ router
 
 router
     .route("/update/:id")
-    .put(auth, reservationControllers.updateReservationById);
+    .put(auth, auditMiddleware, reservationControllers.updateReservationById);
 
 /**
  * @openapi
@@ -389,7 +393,9 @@ router
  *                   example: Internal server error
  */
 
-router.route("/checkIn").put(auth, reservationControllers.checkIn);
+router
+    .route("/checkIn")
+    .put(auth, auditMiddleware, reservationControllers.checkIn);
 
 /**
  * @openapi
@@ -464,7 +470,9 @@ router.route("/checkIn").put(auth, reservationControllers.checkIn);
  *                   example: Internal server error
  */
 
-router.route("/checkOut").put(auth, reservationControllers.checkOut);
+router
+    .route("/checkOut")
+    .put(auth, auditMiddleware, reservationControllers.checkOut);
 
 /**
  * @openapi
@@ -541,7 +549,11 @@ router.route("/checkOut").put(auth, reservationControllers.checkOut);
 
 router
     .route("/cancel/:id")
-    .delete(auth, reservationControllers.cancelReservationById);
+    .delete(
+        auth,
+        auditMiddleware,
+        reservationControllers.cancelReservationById
+    );
 
 /**
  * @openapi

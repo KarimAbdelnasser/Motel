@@ -2,6 +2,7 @@ import { Router } from "express";
 import * as userControllers from "../controllers/users.controller";
 import { validateUser } from "../middleware/validateUser";
 import auth from "../middleware/auth";
+import auditMiddleware from "../middleware/audit";
 const router = Router();
 
 router.route("/").post(validateUser, userControllers.create);
@@ -76,7 +77,9 @@ router.route("/").post(validateUser, userControllers.create);
  *                   example: An error occurred
  */
 
-router.route("/verify/:verifyToken").get(auth, userControllers.verifyUser);
+router
+    .route("/verify/:verifyToken")
+    .get(auth, auditMiddleware, userControllers.verifyUser);
 
 /**
  * @openapi
@@ -153,7 +156,7 @@ router.route("/verify/:verifyToken").get(auth, userControllers.verifyUser);
  *                   example: An error occurred
  */
 
-router.route("/me").get(auth, userControllers.getUser);
+router.route("/me").get(auth, auditMiddleware, userControllers.getUser);
 
 /**
  * @openapi
@@ -234,7 +237,7 @@ router.route("/me").get(auth, userControllers.getUser);
  *                   example: An error occurred
  */
 
-router.route("/update").put(auth, userControllers.update);
+router.route("/update").put(auth, auditMiddleware, userControllers.update);
 
 /**
  * @openapi
@@ -354,7 +357,7 @@ router.route("/update").put(auth, userControllers.update);
  *                   example: An error occurred
  */
 
-router.route("/reset").get(auth, userControllers.verifyReset);
+router.route("/reset").get(auth, auditMiddleware, userControllers.verifyReset);
 
 /**
  * @openapi
@@ -421,7 +424,7 @@ router.route("/reset").get(auth, userControllers.verifyReset);
 
 router
     .route("/reset/verify/:verifyToken")
-    .post(auth, userControllers.confirmReset);
+    .post(auth, auditMiddleware, userControllers.confirmReset);
 
 /**
  * @openapi
@@ -525,7 +528,7 @@ router
  *                   example: An error occurred
  */
 
-router.route("/admin").get(auth, userControllers.getAdmin);
+router.route("/admin").get(auth, auditMiddleware, userControllers.getAdmin);
 
 /**
  * @openapi
@@ -612,7 +615,9 @@ router.route("/admin").get(auth, userControllers.getAdmin);
  *                   example: An error occurred
  */
 
-router.route("/delete").delete(auth, userControllers.deleteUser);
+router
+    .route("/delete")
+    .delete(auth, auditMiddleware, userControllers.deleteUser);
 
 /**
  * @openapi

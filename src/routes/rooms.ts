@@ -2,10 +2,13 @@ import { Router } from "express";
 import * as roomControllers from "../controllers/rooms.controller";
 import { roomValidate } from "../middleware/validateRoom";
 import { isAdmin } from "../middleware/admin";
+import auditMiddleware from "../middleware/audit";
 
 const router = Router();
 
-router.route("/new").post(roomValidate, isAdmin, roomControllers.createRoom);
+router
+    .route("/new")
+    .post(isAdmin, auditMiddleware, roomValidate, roomControllers.createRoom);
 
 /**
  * @openapi
@@ -91,7 +94,7 @@ router.route("/new").post(roomValidate, isAdmin, roomControllers.createRoom);
  *                   example: Internal server error
  */
 
-router.route("/all").get(isAdmin, roomControllers.getRooms);
+router.route("/all").get(isAdmin, auditMiddleware, roomControllers.getRooms);
 
 /**
  * @openapi
@@ -154,7 +157,9 @@ router.route("/all").get(isAdmin, roomControllers.getRooms);
  *                   example: Internal server error
  */
 
-router.route("/getById/:id").get(isAdmin, roomControllers.getRoomById);
+router
+    .route("/getById/:id")
+    .get(isAdmin, auditMiddleware, roomControllers.getRoomById);
 
 /**
  * @openapi
@@ -223,7 +228,12 @@ router.route("/getById/:id").get(isAdmin, roomControllers.getRoomById);
 
 router
     .route("/update/:id")
-    .put(isAdmin, roomValidate, roomControllers.updateRoomById);
+    .put(
+        isAdmin,
+        auditMiddleware,
+        roomValidate,
+        roomControllers.updateRoomById
+    );
 
 /**
  * @openapi
@@ -299,7 +309,7 @@ router
 
 router
     .route("/unavailable/:id")
-    .post(isAdmin, roomControllers.underMaintenance);
+    .post(isAdmin, auditMiddleware, roomControllers.underMaintenance);
 
 /**
  * @openapi
@@ -357,7 +367,9 @@ router
  *                   example: Internal server error
  */
 
-router.route("/delete/:id").delete(isAdmin, roomControllers.deleteRoomById);
+router
+    .route("/delete/:id")
+    .delete(isAdmin, auditMiddleware, roomControllers.deleteRoomById);
 
 /**
  * @openapi

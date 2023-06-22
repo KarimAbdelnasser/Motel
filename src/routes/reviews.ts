@@ -2,9 +2,18 @@ import { Router } from "express";
 import * as reviewControllers from "../controllers/reviews.controller";
 import { validateReview } from "../middleware/validateReview";
 import auth from "../middleware/auth";
+import auditMiddleware from "../middleware/audit";
+
 const router = Router();
 
-router.route("/new").post(auth, validateReview, reviewControllers.createReview);
+router
+    .route("/new")
+    .post(
+        auth,
+        auditMiddleware,
+        validateReview,
+        reviewControllers.createReview
+    );
 
 /**
  * @openapi
@@ -101,7 +110,9 @@ router.route("/new").post(auth, validateReview, reviewControllers.createReview);
  *                   example: Internal server error
  */
 
-router.route("/getAll").get(auth, reviewControllers.getReviews);
+router
+    .route("/getAll")
+    .get(auth, auditMiddleware, reviewControllers.getReviews);
 
 /**
  * @openapi
@@ -169,7 +180,9 @@ router.route("/getAll").get(auth, reviewControllers.getReviews);
  *                   example: Internal server error
  */
 
-router.route("/getById/:id").get(auth, reviewControllers.getReviewById);
+router
+    .route("/getById/:id")
+    .get(auth, auditMiddleware, reviewControllers.getReviewById);
 
 /**
  * @openapi
@@ -254,7 +267,12 @@ router.route("/getById/:id").get(auth, reviewControllers.getReviewById);
 
 router
     .route("/update/:id")
-    .put(auth, validateReview, reviewControllers.updateReviewById);
+    .put(
+        auth,
+        auditMiddleware,
+        validateReview,
+        reviewControllers.updateReviewById
+    );
 
 /**
  * @openapi
@@ -344,7 +362,9 @@ router
  *                   example: Internal server error
  */
 
-router.route("/delete/:id").delete(auth, reviewControllers.deleteReviewById);
+router
+    .route("/delete/:id")
+    .delete(auth, auditMiddleware, reviewControllers.deleteReviewById);
 
 /**
  * @openapi
