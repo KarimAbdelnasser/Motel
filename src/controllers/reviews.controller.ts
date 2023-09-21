@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Review } from "../models/review";
 import { User } from "../models/user";
 import { Reservation } from "../models/reservation";
+import { logger } from "../utilities/logger";
 
 type UserType = {
     _id: string;
@@ -48,7 +49,7 @@ export const createReview = async (
             review,
         });
     } catch (error) {
-        console.error("Error creating review:", error);
+        logger.error(`Error creating review: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -70,7 +71,7 @@ export const getReviews = async (
             reviews: reviews,
         });
     } catch (error) {
-        console.error("Error retrieving reviews:", error);
+        logger.error(`Error retrieving reviews: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -101,7 +102,7 @@ export const getReviewById = async (
             review: review,
         });
     } catch (error) {
-        console.error("Error retrieving review:", error);
+        logger.error(`Error retrieving review: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -138,7 +139,7 @@ export const updateReviewById = async (
 
         return res.status(200).json({ message: "Review updated successfully" });
     } catch (error) {
-        console.error("Error updating review:", error);
+        logger.error(`Error updating review: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -167,7 +168,7 @@ export const deleteReviewById = async (
 
         res.status(200).json({ message: "Review deleted successfully" });
     } catch (error) {
-        console.error("Error deleting review:", error);
+        logger.error(`Error deleting review: ${(error as Error).message}`);
         res.status(500).json({ error: "Internal server error" });
     }
 };

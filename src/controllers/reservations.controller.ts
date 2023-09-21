@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Reservation } from "../models/reservation";
 import { Room } from "../models/room";
 import { User } from "../models/user";
+import { logger } from "../utilities/logger";
 
 type UserType = {
     _id: string;
@@ -90,7 +91,7 @@ export const createReservation = async (
             },
         });
     } catch (error) {
-        console.error("Error creating reservation:", error);
+        logger.error(`Error creating reservation: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -128,7 +129,9 @@ export const getReservations = async (
             reservations: reservations,
         });
     } catch (error) {
-        console.error("Error retrieving reservations:", error);
+        logger.error(
+            `Error retrieving reservations: ${(error as Error).message}`
+        );
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -164,7 +167,9 @@ export const getReservationById = async (
             reservation: reservation,
         });
     } catch (error) {
-        console.error("Error retrieving reservation:", error);
+        logger.error(
+            `Error retrieving reservation: ${(error as Error).message}`
+        );
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -265,7 +270,7 @@ export const updateReservationById = async (
             reservation: newReservation,
         });
     } catch (error) {
-        console.error("Error updating reservation:", error);
+        logger.error(`Error updating reservation: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -309,7 +314,9 @@ export const cancelReservationById = async (
             .status(200)
             .json({ message: "Reservation cancelled successfully" });
     } catch (error) {
-        console.error("Error cancelling reservation:", error);
+        logger.error(
+            `Error cancelling reservation: ${(error as Error).message}`
+        );
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -361,7 +368,9 @@ export const checkIn = async (
             message: "You have checked in!",
         });
     } catch (error) {
-        console.error("Error checking in reservation:", error);
+        logger.error(
+            `Error checking in reservation: ${(error as Error).message}`
+        );
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -417,7 +426,9 @@ export const checkOut = async (
             message: "You have checked out!",
         });
     } catch (error) {
-        console.error("Error checking out reservation:", error);
+        logger.error(
+            `Error checking out reservation: ${(error as Error).message}`
+        );
         return res.status(500).json({ error: "Internal server error" });
     }
 };

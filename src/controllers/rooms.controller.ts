@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Room } from "../models/room";
+import { logger } from "../utilities/logger";
 
 type UserType = {
     _id: string;
@@ -33,7 +34,7 @@ export const createRoom = async (
             room,
         });
     } catch (error) {
-        console.error("Error creating room:", error);
+        logger.error(`Error creating room: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -52,7 +53,7 @@ export const getRooms = async (
 
         return res.status(200).json({ rooms });
     } catch (error) {
-        console.error("Error retrieving rooms:", error);
+        logger.error(`Error retrieving rooms: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -73,7 +74,7 @@ export const getRoomById = async (
 
         return res.status(200).json({ room });
     } catch (error) {
-        console.error("Error retrieving room:", error);
+        logger.error(`Error retrieving room: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -104,7 +105,7 @@ export const updateRoomById = async (
 
         return res.status(200).json({ message: "Room updated successfully" });
     } catch (error) {
-        console.error("Error updating room:", error);
+        logger.error(`Error updating room: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -125,7 +126,7 @@ export const deleteRoomById = async (
 
         return res.status(200).json({ message: "Room deleted successfully" });
     } catch (error) {
-        console.error("Error deleting room:", error);
+        logger.error(`Error deleting room: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
@@ -149,7 +150,7 @@ export const underMaintenance = async (
             .status(201)
             .json({ message: "Room status changed successfully!" });
     } catch (error) {
-        console.error("Error deleting room:", error);
+        logger.error(`Error deleting room: ${(error as Error).message}`);
         return res.status(500).json({ error: "Internal server error" });
     }
 };

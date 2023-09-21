@@ -64,7 +64,7 @@ export const create = async (
                 },
             });
     } catch (error) {
-        logger.error("Error creating a new user:", (error as Error).message);
+        logger.error(`Error creating a new user: ${(error as Error).message}`);
         return res.status(500).json({ error: "An error occurred" });
     }
 };
@@ -100,8 +100,7 @@ export const verifyUser = async (
         }
     } catch (error) {
         logger.error(
-            "Error confirm verifying a user:",
-            (error as Error).message
+            `Error confirm verifying a user: ${(error as Error).message}`
         );
         return res.status(500).json({ error: "An error occurred" });
     }
@@ -133,7 +132,7 @@ export const getUser = async (
             return res.status(401).json({ message: "Unauthorized" });
         }
     } catch (error) {
-        logger.error("Error getting a user:", (error as Error).message);
+        logger.error(`Error getting a user: ${(error as Error).message}`);
         return res.status(500).json({ error: "An error occurred" });
     }
 };
@@ -209,7 +208,7 @@ export const update = async (
             data: updatedUser,
         });
     } catch (error) {
-        logger.error("Error updating a user:", (error as Error).message);
+        logger.error(`Error updating a user: ${(error as Error).message}`);
         return res.status(500).json({ error: "An error occurred" });
     }
 };
@@ -254,7 +253,11 @@ export const verifyReset = async (
             return res.status(401).json({ message: "Unauthorized!" });
         }
     } catch (error) {
-        console.error("Error verifying resetting password process:", error);
+        logger.error(
+            `Error verifying resetting password process: ${
+                (error as Error).message
+            }`
+        );
         return res.status(500).json({ error: "An error occurred" });
     }
 };
@@ -305,7 +308,11 @@ export const confirmReset = async (
             return res.status(401).json({ message: "Unauthorized!" });
         }
     } catch (error) {
-        console.error("Error confirm resetting password process:", error);
+        logger.error(
+            `Error confirm resetting password process: ${
+                (error as Error).message
+            }`
+        );
         return res.status(500).json({ error: "An error occurred" });
     }
 };
@@ -339,7 +346,7 @@ export const deleteUser = async (
             return res.status(401).json({ message: "Unauthorized!" });
         }
     } catch (error) {
-        logger.error("Error deleting a user:", (error as Error).message);
+        logger.error(`Error deleting a user: ${(error as Error).message}`);
         return res.status(500).json({ error: "An error occurred" });
     }
 };
@@ -373,7 +380,7 @@ export const getAdmin = async (
             return res.status(401).json({ message: "Unauthorized!" });
         }
     } catch (error) {
-        logger.error("Error deleting a user:", (error as Error).message);
+        logger.error(`Error deleting a user: ${(error as Error).message}`);
         return res.status(500).json({ error: "An error occurred" });
     }
 };
